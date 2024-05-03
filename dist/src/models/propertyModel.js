@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Property = exports.PropertySchema = exports.propertyZodSchema = void 0;
+exports.PropertyModel = exports.propertyZodSchema = void 0;
 const zod_1 = require("zod");
 const mongoose_1 = require("mongoose");
 const mongoose_zod_1 = require("mongoose-zod");
@@ -40,11 +40,10 @@ const propertyZodSchema = zod_1.z.object({
     price: priceZodSchema,
 });
 exports.propertyZodSchema = propertyZodSchema;
-const PropertySchema = (0, mongoose_zod_1.toMongooseSchema)(propertyZodSchema.mongoose({
+const PropertyMongooseSchema = (0, mongoose_zod_1.toMongooseSchema)(propertyZodSchema.mongoose({
     schemaOptions: {
         collection: "properties",
     },
 }));
-exports.PropertySchema = PropertySchema;
-const Property = (0, mongoose_1.model)("Property", PropertySchema);
-exports.Property = Property;
+const PropertyModel = (0, mongoose_1.model)("Property", PropertyMongooseSchema);
+exports.PropertyModel = PropertyModel;

@@ -12,8 +12,9 @@ const express_mongo_sanitize_1 = __importDefault(require("express-mongo-sanitize
 const compression_1 = __importDefault(require("compression"));
 const body_parser_1 = __importDefault(require("body-parser"));
 const cors_1 = __importDefault(require("cors"));
-const propertiesRoutes_1 = __importDefault(require("./routes/propertiesRoutes"));
-const newsletterRoutes_1 = __importDefault(require("./routes/newsletterRoutes"));
+const propertiesRoutes_1 = require("./routes/propertiesRoutes");
+const newsletterEmailsRoutes_1 = require("./routes/newsletterEmailsRoutes");
+const inquiriesRoutes_1 = require("./routes/inquiriesRoutes");
 dotenv_1.default.config();
 (0, mongoose_zod_1.setup)();
 const app = (0, express_1.default)();
@@ -33,8 +34,9 @@ app.use(body_parser_1.default.json());
 app.use(body_parser_1.default.urlencoded({ extended: true }));
 app.use(express_1.default.static("public"));
 // Routes
-app.use("/properties", propertiesRoutes_1.default);
-app.use("/newsletter", newsletterRoutes_1.default);
+app.use("/properties", propertiesRoutes_1.propertiesRoutes);
+app.use("/newsletter", newsletterEmailsRoutes_1.newsletterEmailsRoutes);
+app.use("/inquiries", inquiriesRoutes_1.inquiriesRoutes);
 // Error handling
 app.use((error, req, res, next) => {
     console.error(error);

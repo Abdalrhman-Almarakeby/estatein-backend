@@ -10,15 +10,15 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.subscribe = void 0;
-const newsletterModel_1 = require("../models/newsletterModel");
+const newsletterEmailModel_1 = require("../models/newsletterEmailModel");
 function subscribe(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const data = req.body;
-            const { error } = newsletterModel_1.newsletterEmailZodSchema.safeParse(data);
+            const { error } = newsletterEmailModel_1.newsletterEmailZodSchema.safeParse(data);
             if (error)
                 return res.status(400).send(error.format());
-            const newEmail = yield newsletterModel_1.NewsletterEmail.create(data);
+            const newEmail = yield newsletterEmailModel_1.NewsletterEmailModel.create(data);
             if (!newEmail)
                 return res.status(400).send("Error subscribing to the newsletter");
             res.status(201).send({
