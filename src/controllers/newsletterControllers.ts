@@ -1,5 +1,5 @@
 import { type Request, type Response } from "express";
-import { NewsletterEmail, newsletterEmailZodSchema } from "../models/newsletterModel";
+import { NewsletterEmailModel, newsletterEmailZodSchema } from "../models/newsletterEmailModel";
 
 export async function subscribe(req: Request, res: Response) {
   try {
@@ -8,7 +8,7 @@ export async function subscribe(req: Request, res: Response) {
     const { error } = newsletterEmailZodSchema.safeParse(data);
     if (error) return res.status(400).send(error.format());
 
-    const newEmail = await NewsletterEmail.create(data);
+    const newEmail = await NewsletterEmailModel.create(data);
     if (!newEmail) return res.status(400).send("Error subscribing to the newsletter");
 
     res.status(201).send({

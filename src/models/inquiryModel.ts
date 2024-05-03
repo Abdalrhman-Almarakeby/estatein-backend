@@ -25,7 +25,7 @@ const inquiryZodSchema = z
   })
   .merge(genTimestampsSchema("crAt"));
 
-const InquirySchema = toMongooseSchema(
+const InquiryMongooseSchema = toMongooseSchema(
   inquiryZodSchema.mongoose({
     schemaOptions: {
       collection: "inquiries",
@@ -33,6 +33,6 @@ const InquirySchema = toMongooseSchema(
   })
 );
 
-const Inquiry = model("Inquiry", InquirySchema);
+const InquiryModel = model("Inquiry", InquiryMongooseSchema);
 
-export { inquiryZodSchema, InquirySchema, Inquiry };
+export { inquiryZodSchema, InquiryModel };

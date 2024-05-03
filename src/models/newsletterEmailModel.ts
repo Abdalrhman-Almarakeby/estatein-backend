@@ -8,7 +8,7 @@ const newsletterEmailZodSchema = z
   })
   .merge(genTimestampsSchema("crAt"));
 
-const NewsletterEmailSchema = toMongooseSchema(
+const NewsletterEmailMongooseSchema = toMongooseSchema(
   newsletterEmailZodSchema.mongoose({
     schemaOptions: {
       collection: "newsletterEmails",
@@ -16,6 +16,6 @@ const NewsletterEmailSchema = toMongooseSchema(
   })
 );
 
-const NewsletterEmail = model("NewsletterEmail", NewsletterEmailSchema);
+const NewsletterEmailModel = model("NewsletterEmail", NewsletterEmailMongooseSchema);
 
-export { newsletterEmailZodSchema, NewsletterEmailSchema, NewsletterEmail };
+export { newsletterEmailZodSchema, NewsletterEmailModel };

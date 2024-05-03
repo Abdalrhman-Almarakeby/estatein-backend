@@ -1,12 +1,12 @@
 import { type Request, type Response } from "express";
-import { Property, propertyZodSchema } from "../models/propertyModel";
+import { PropertyModel, propertyZodSchema } from "../models/propertyModel";
 import { validateLimit } from "../utils/validateLimit";
 
 export async function getAllProperties(req: Request, res: Response) {
   try {
     const queryLimit = req.query.limit && +req.query.limit;
     const limit = queryLimit && validateLimit(queryLimit) ? queryLimit : 100;
-    const properties = await Property.find().limit(limit);
+    const properties = await PropertyModel.find().limit(limit);
 
     res.send(properties);
   } catch (err) {
@@ -22,7 +22,7 @@ export async function createProperty(req: Request, res: Response) {
     const { error } = propertyZodSchema.safeParse(propertyData);
     if (error) return res.status(400).send(error.format());
 
-    const newProperty = await Property.create(propertyData);
+    const newProperty = await PropertyModel.create(propertyData);
     if (!newProperty) return res.status(400).send("Error creating property");
 
     res.status(201).send({
@@ -39,7 +39,7 @@ export async function createProperty(req: Request, res: Response) {
 export async function getProperty(req: Request, res: Response) {
   try {
     const { id } = req.params;
-    const property = await Property.findById(id);
+    const property = await PropertyModel.findById(id);
 
     if (!property) return res.status(404).send("Property not found");
 
@@ -58,7 +58,7 @@ export async function updateProperty(req: Request, res: Response) {
     const { error } = propertyZodSchema.safeParse(propertyData);
     if (error) return res.status(400).send(error);
 
-    const updatedProperty = await Property.findByIdAndUpdate(id, propertyData, { new: true });
+    const updatedProperty = await PropertyModel.findByIdAndUpdate(id, propertyData, { new: true });
     if (!updatedProperty) return res.status(400).send("Error updating property");
 
     res.status(200).send({
@@ -75,7 +75,7 @@ export async function updateProperty(req: Request, res: Response) {
 export async function deleteProperty(req: Request, res: Response) {
   try {
     const { id } = req.params;
-    const property = await Property.findByIdAndDelete(id);
+    const property = await PropertyModel.findByIdAndDelete(id);
 
     if (!property) return res.status(404).send("Property not found");
 

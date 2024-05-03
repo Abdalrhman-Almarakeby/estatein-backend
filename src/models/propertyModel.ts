@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { model } from "mongoose";
-import { genTimestampsSchema, toMongooseSchema } from "mongoose-zod";
+import { toMongooseSchema } from "mongoose-zod";
 
 const feesZodSchema = z.object({
   transferTax: z.number(),
@@ -42,7 +42,7 @@ const propertyZodSchema = z.object({
   price: priceZodSchema,
 });
 
-const PropertySchema = toMongooseSchema(
+const PropertyMongooseSchema = toMongooseSchema(
   propertyZodSchema.mongoose({
     schemaOptions: {
       collection: "properties",
@@ -50,6 +50,6 @@ const PropertySchema = toMongooseSchema(
   })
 );
 
-const Property = model("Property", PropertySchema);
+const PropertyModel = model("Property", PropertyMongooseSchema);
 
-export { propertyZodSchema, PropertySchema, Property };
+export { propertyZodSchema, PropertyModel };
