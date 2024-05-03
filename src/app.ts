@@ -20,7 +20,11 @@ app.use(
   })
 );
 app.use(ExpressMongoSanitize());
-app.use(cors());
+app.use(
+  cors({
+    origin: "*",
+  })
+);
 
 // Compression
 app.use(compression());
