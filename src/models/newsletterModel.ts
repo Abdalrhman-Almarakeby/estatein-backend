@@ -2,8 +2,6 @@ import { z } from "zod";
 import { model } from "mongoose";
 import { genTimestampsSchema, toMongooseSchema } from "mongoose-zod";
 
-z;
-
 const newsletterEmailZodSchema = z
   .object({
     email: z.string().email(),
