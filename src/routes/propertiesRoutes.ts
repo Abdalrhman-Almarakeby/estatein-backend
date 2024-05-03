@@ -8,12 +8,10 @@ import {
 } from "../controllers/propertiesControllers";
 import { validateId } from "../middlewares/validateId";
 
-const router: Router = express.Router();
+export const propertiesRoutes: Router = express.Router();
 
-router.get("/", getAllProperties);
-router.post("/", createProperty);
-router.get("/:id", validateId, getProperty);
-router.put("/:id", validateId, updateProperty);
-router.delete("/:id", validateId, deleteProperty);
-
-export default router;
+propertiesRoutes.get("/", getAllProperties);
+propertiesRoutes.post("/", createProperty);
+propertiesRoutes.get("/:id", validateId, getProperty);
+propertiesRoutes.put("/:id", validateId, updateProperty);
+propertiesRoutes.delete("/:id", validateId, deleteProperty);

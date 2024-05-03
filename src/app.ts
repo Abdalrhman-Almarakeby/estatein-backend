@@ -7,9 +7,9 @@ import compression from "compression";
 import bodyParser from "body-parser";
 import cors from "cors";
 
-import propertiesRoutes from "./routes/propertiesRoutes";
-import newsletterRoutes from "./routes/newsletterRoutes";
-import inquiriesRoutes from "./routes/inquiryRoutes";
+import { propertiesRoutes } from "./routes/propertiesRoutes";
+import { newsletterEmailsRoutes } from "./routes/newsletterEmailsRoutes";
+import { inquiriesRoutes } from "./routes/inquiriesRoutes";
 
 dotenv.config();
 setup();
@@ -39,7 +39,7 @@ app.use(express.static("public"));
 
 // Routes
 app.use("/properties", propertiesRoutes);
-app.use("/newsletter", newsletterRoutes);
+app.use("/newsletter", newsletterEmailsRoutes);
 app.use("/inquiries", inquiriesRoutes);
 
 // Error handling
