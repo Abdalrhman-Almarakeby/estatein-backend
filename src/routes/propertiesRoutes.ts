@@ -6,13 +6,14 @@ import {
   updateProperty,
   deleteProperty,
 } from "../controllers/propertiesControllers";
+import { validateId } from "../middlewares/validateId";
 
 const router: Router = express.Router();
 
 router.get("/", getAllProperties);
 router.post("/", createProperty);
-router.get("/:id", getProperty);
-router.put("/:id", updateProperty);
-router.delete("/:id", deleteProperty);
+router.get("/:id", validateId, getProperty);
+router.put("/:id", validateId, updateProperty);
+router.delete("/:id", validateId, deleteProperty);
 
 export default router;
