@@ -9,6 +9,7 @@ import cors from "cors";
 
 import propertiesRoutes from "./routes/propertiesRoutes";
 import newsletterRoutes from "./routes/newsletterRoutes";
+import inquiriesRoutes from "./routes/inquiryRoutes";
 
 dotenv.config();
 setup();
@@ -39,6 +40,7 @@ app.use(express.static("public"));
 // Routes
 app.use("/properties", propertiesRoutes);
 app.use("/newsletter", newsletterRoutes);
+app.use("/inquiries", inquiriesRoutes);
 
 // Error handling
 app.use((error: Error, req: Request, res: Response, next: NextFunction): void => {
