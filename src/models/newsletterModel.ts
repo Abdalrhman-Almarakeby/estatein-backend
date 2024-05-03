@@ -1,15 +1,23 @@
-import { Schema, model } from "mongoose";
-import Joi from "joi";
+import { z } from "zod";
+import { model } from "mongoose";
+import { genTimestampsSchema, toMongooseSchema } from "mongoose-zod";
 
-const newsletterSchema = new Schema({
-  email: {
-    type: String,
-    required: true,
-  },
-});
+z;
 
-export const JoiSchema = Joi.object({
-  email: Joi.string().email().required(),
-}).required();
+const newsletterEmailZodSchema = z
+  .object({
+    email: z.string().email(),
+  })
+  .merge(genTimestampsSchema("crAt"));
 
-export const NewsletterModel = model("NewsletterEmail", newsletterSchema);
+const NewsletterEmailSchema = toMongooseSchema(
+  newsletterEmailZodSchema.mongoose({
+    schemaOptions: {
+      collection: "newsletterEmails",
+    },
+  })
+);
+
+const NewsletterEmail = model("NewsletterEmail", NewsletterEmailSchema);
+
+export { newsletterEmailZodSchema, NewsletterEmailSchema, NewsletterEmail };

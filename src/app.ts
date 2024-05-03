@@ -1,4 +1,5 @@
 import express, { type Express, type Request, type Response, type NextFunction } from "express";
+import { setup } from "mongoose-zod";
 import dotenv from "dotenv";
 import helmet from "helmet";
 import ExpressMongoSanitize from "express-mongo-sanitize";
@@ -10,6 +11,7 @@ import propertiesRoutes from "./routes/propertiesRoutes";
 import newsletterRoutes from "./routes/newsletterRoutes";
 
 dotenv.config();
+setup();
 
 const app: Express = express();
 
@@ -35,7 +37,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
 // Routes
-
 app.use("/properties", propertiesRoutes);
 app.use("/newsletter", newsletterRoutes);
 
@@ -45,4 +46,4 @@ app.use((error: Error, req: Request, res: Response, next: NextFunction): void =>
   res.status(500).send("Server error");
 });
 
-export default app;
+export { app };
