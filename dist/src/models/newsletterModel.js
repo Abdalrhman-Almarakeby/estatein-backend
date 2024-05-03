@@ -1,18 +1,20 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.NewsletterModel = exports.JoiSchema = void 0;
+exports.NewsletterEmail = exports.NewsletterEmailSchema = exports.newsletterEmailZodSchema = void 0;
+const zod_1 = require("zod");
 const mongoose_1 = require("mongoose");
-const joi_1 = __importDefault(require("joi"));
-const newsletterSchema = new mongoose_1.Schema({
-    email: {
-        type: String,
-        required: true,
+const mongoose_zod_1 = require("mongoose-zod");
+const newsletterEmailZodSchema = zod_1.z
+    .object({
+    email: zod_1.z.string().email(),
+})
+    .merge((0, mongoose_zod_1.genTimestampsSchema)("crAt"));
+exports.newsletterEmailZodSchema = newsletterEmailZodSchema;
+const NewsletterEmailSchema = (0, mongoose_zod_1.toMongooseSchema)(newsletterEmailZodSchema.mongoose({
+    schemaOptions: {
+        collection: "newsletterEmails",
     },
-});
-exports.JoiSchema = joi_1.default.object({
-    email: joi_1.default.string().email().required(),
-}).required();
-exports.NewsletterModel = (0, mongoose_1.model)("NewsletterEmail", newsletterSchema);
+}));
+exports.NewsletterEmailSchema = NewsletterEmailSchema;
+const NewsletterEmail = (0, mongoose_1.model)("NewsletterEmail", NewsletterEmailSchema);
+exports.NewsletterEmail = NewsletterEmail;

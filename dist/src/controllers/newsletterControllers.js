@@ -15,21 +15,21 @@ function subscribe(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const data = req.body;
-            const { error } = newsletterModel_1.JoiSchema.validate(data);
+            const { error } = newsletterModel_1.newsletterEmailZodSchema.safeParse(data);
             if (error)
-                return res.status(400).send(error);
-            const newEmail = yield newsletterModel_1.NewsletterModel.create(data);
+                return res.status(400).send(error.format());
+            const newEmail = yield newsletterModel_1.NewsletterEmail.create(data);
             if (!newEmail)
                 return res.status(400).send("Error subscribing to the newsletter");
             res.status(201).send({
                 success: true,
                 message: "Subscribed successfully to the newsletter",
-                email: newEmail,
+                data: newEmail,
             });
         }
         catch (err) {
             console.log(err);
-            res.status(500).send(err);
+            res.status(500).send({ err });
         }
     });
 }

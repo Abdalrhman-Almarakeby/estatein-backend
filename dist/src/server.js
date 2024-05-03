@@ -13,13 +13,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importDefault(require("mongoose"));
-const app_1 = __importDefault(require("./app"));
+const app_1 = require("./app");
 const dbURI = process.env.DB_URI;
 const port = process.env.PORT || 1111;
 (() => __awaiter(void 0, void 0, void 0, function* () {
     try {
         yield mongoose_1.default.connect(dbURI);
-        const server = app_1.default.listen(port, () => {
+        const server = app_1.app.listen(port, () => {
             console.log(`The app is listing on port ${port}`);
         });
         server.on("error", (err) => {
