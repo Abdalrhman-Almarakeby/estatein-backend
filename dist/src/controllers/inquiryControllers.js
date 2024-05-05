@@ -30,11 +30,11 @@ exports.getAllInquiries = getAllInquiries;
 function createInquiry(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const data = req.body;
-            const { error } = inquiryModel_1.inquiryZodSchema.safeParse(data);
+            const { inquiryData } = req.body;
+            const { error } = inquiryModel_1.inquiryZodSchema.safeParse(inquiryData);
             if (error)
                 return res.status(400).send(error.format());
-            const newInquiry = yield inquiryModel_1.InquiryModel.create(data);
+            const newInquiry = yield inquiryModel_1.InquiryModel.create(inquiryData);
             if (!newInquiry)
                 return res.status(400).send("Error creating new inquiry");
             res.status(201).send({
@@ -70,11 +70,11 @@ function updateInquiry(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const { id } = req.params;
-            const data = req.body;
-            const { error } = inquiryModel_1.inquiryZodSchema.safeParse(data);
+            const { inquiryData } = req.body;
+            const { error } = inquiryModel_1.inquiryZodSchema.safeParse(inquiryData);
             if (error)
                 return res.status(400).send(error.format());
-            const inquiry = yield inquiryModel_1.InquiryModel.findByIdAndUpdate(id, data, {
+            const inquiry = yield inquiryModel_1.InquiryModel.findByIdAndUpdate(id, inquiryData, {
                 new: true,
             });
             if (!inquiry)
