@@ -17,12 +17,12 @@ export async function getAllInquiries(req: Request, res: Response) {
 
 export async function createInquiry(req: Request, res: Response) {
   try {
-    const data = req.body;
+    const { inquiryData } = req.body;
 
-    const { error } = inquiryZodSchema.safeParse(data);
+    const { error } = inquiryZodSchema.safeParse(inquiryData);
     if (error) return res.status(400).send(error.format());
 
-    const newInquiry = await InquiryModel.create(data);
+    const newInquiry = await InquiryModel.create(inquiryData);
     if (!newInquiry) return res.status(400).send("Error creating new inquiry");
 
     res.status(201).send({
@@ -53,12 +53,12 @@ export async function getInquiry(req: Request, res: Response) {
 export async function updateInquiry(req: Request, res: Response) {
   try {
     const { id } = req.params;
-    const data = req.body;
+    const { inquiryData } = req.body;
 
-    const { error } = inquiryZodSchema.safeParse(data);
+    const { error } = inquiryZodSchema.safeParse(inquiryData);
     if (error) return res.status(400).send(error.format());
 
-    const inquiry = await InquiryModel.findByIdAndUpdate(id, data, {
+    const inquiry = await InquiryModel.findByIdAndUpdate(id, inquiryData, {
       new: true,
     });
     if (!inquiry) return res.status(404).send("Inquiry not found");
