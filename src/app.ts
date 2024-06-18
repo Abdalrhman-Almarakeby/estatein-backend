@@ -8,6 +8,7 @@ import bodyParser from "body-parser";
 import cors from "cors";
 
 import { limiter } from "./middlewares/limiter";
+import { verifyAPIKey } from "./middlewares/verifyKey";
 
 import { propertiesRoutes } from "./routes/propertiesRoutes";
 import { newsletterEmailsRoutes } from "./routes/newsletterEmailsRoutes";
@@ -31,6 +32,7 @@ app.use(
   })
 );
 app.use(limiter);
+app.use(verifyAPIKey);
 
 // Compression
 app.use(compression());
