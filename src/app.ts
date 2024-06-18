@@ -7,6 +7,8 @@ import compression from "compression";
 import bodyParser from "body-parser";
 import cors from "cors";
 
+import { limiter } from "./middlewares/limiter";
+
 import { propertiesRoutes } from "./routes/propertiesRoutes";
 import { newsletterEmailsRoutes } from "./routes/newsletterEmailsRoutes";
 import { inquiriesRoutes } from "./routes/inquiriesRoutes";
@@ -28,6 +30,7 @@ app.use(
     origin: "*",
   })
 );
+app.use(limiter);
 
 // Compression
 app.use(compression());
