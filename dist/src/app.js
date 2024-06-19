@@ -12,6 +12,8 @@ const express_mongo_sanitize_1 = __importDefault(require("express-mongo-sanitize
 const compression_1 = __importDefault(require("compression"));
 const body_parser_1 = __importDefault(require("body-parser"));
 const cors_1 = __importDefault(require("cors"));
+const limiter_1 = require("./middlewares/limiter");
+const verifyKey_1 = require("./middlewares/verifyKey");
 const propertiesRoutes_1 = require("./routes/propertiesRoutes");
 const newsletterEmailsRoutes_1 = require("./routes/newsletterEmailsRoutes");
 const inquiriesRoutes_1 = require("./routes/inquiriesRoutes");
@@ -27,6 +29,8 @@ app.use((0, express_mongo_sanitize_1.default)());
 app.use((0, cors_1.default)({
     origin: "*",
 }));
+app.use(limiter_1.limiter);
+app.use(verifyKey_1.verifyAPIKey);
 // Compression
 app.use((0, compression_1.default)());
 // Parsing
