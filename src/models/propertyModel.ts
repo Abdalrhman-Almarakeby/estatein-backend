@@ -38,7 +38,7 @@ const propertyZodSchema = z.object({
   bedrooms: z.number(),
   bathrooms: z.number(),
   area: z.number(),
-  image: z.array(z.string()),
+  images: z.array(z.string()),
   features: z.array(z.string().min(1).min(10).max(100)),
   price: priceZodSchema,
 });
