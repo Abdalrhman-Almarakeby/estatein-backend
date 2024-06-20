@@ -1,50 +1,10 @@
 import { z } from "zod";
 import { model } from "mongoose";
 import { genTimestampsSchema, toMongooseSchema } from "mongoose-zod";
-
-const LOCATIONS = [
-  "arizona",
-  "california",
-  "florida",
-  "hawaii",
-  "massachusetts",
-  "michigan",
-  "nebraska",
-  "nevada",
-  "new mexico",
-  "new york",
-  "ohio",
-  "texas",
-  "washington",
-] as const;
-
-const PROPERTIES_TYPES = ["villa", "house", "apartment"] as const;
-
-const PRICING_RANGE = [
-  "0-50000",
-  "50000-100000",
-  "100000-200000",
-  "200000-300000",
-  "300000-400000",
-  "400000-500000",
-  "500000-750000",
-  "750000-1000000",
-  "1000000-2000000",
-  "2000000",
-] as const;
-
-const PROPERTY_SIZE = [
-  "0-100",
-  "100-150",
-  "150-200",
-  "200-250",
-  "250-300",
-  "300-400",
-  "400-500",
-  "500-750",
-  "750-1000",
-  "1000",
-] as const;
+import { LOCATIONS } from "../constant/locations";
+import { PROPERTIES_TYPES } from "../constant/propertiesTypes";
+import { PRICING_RANGES } from "../constant/pricingRanges";
+import { PROPERTY_SIZE } from "../constant/propertySizes";
 
 const propertyInquiryZodSchema = z
   .object({
@@ -99,7 +59,7 @@ const propertyInquiryZodSchema = z
         message: "No. Of Rooms must be a number  between 1 and 10",
       }
     ),
-    budget: z.enum(PRICING_RANGE, {
+    budget: z.enum(PRICING_RANGES, {
       required_error: "Budget is required",
       invalid_type_error: "Invalid budget",
     }),
