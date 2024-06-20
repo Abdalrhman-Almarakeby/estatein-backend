@@ -5,8 +5,8 @@ import { validateLimit } from "../utils/validateLimit";
 export async function getAllProperties(req: Request, res: Response) {
   try {
     const queryLimit = req.query.limit && +req.query.limit;
-    const limit = queryLimit && validateLimit(queryLimit) ? queryLimit : 100;
-    const properties = await PropertyModel.find().limit(limit);
+    const limit = queryLimit && validateLimit(queryLimit) ? queryLimit : null;
+    const properties = limit ? await PropertyModel.find().limit(limit) : await PropertyModel.find();
 
     res.send(properties);
   } catch (err) {
