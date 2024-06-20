@@ -1,23 +1,21 @@
 import { z } from "zod";
 import { model } from "mongoose";
 import { toMongooseSchema } from "mongoose-zod";
+import { LOCATIONS } from "../constant/locations";
 
 const feesZodSchema = z.object({
   transferTax: z.number(),
   legalFees: z.number(),
   homeInspection: z.number(),
   insurance: z.number(),
-  mortgage: z.number(),
 });
 
 const costsZodSchema = z.object({
   taxes: z.number(),
   homeownersAssociationFee: z.number(),
-  insurance: z.number(),
 });
 
 const initialCostsZodSchema = z.object({
-  listingPrice: z.number(),
   additionalFees: z.number(),
   downPayment: z.number(),
   mortgage: z.number(),
@@ -33,11 +31,14 @@ const priceZodSchema = z.object({
 const propertyZodSchema = z.object({
   title: z.string(),
   description: z.string(),
-  location: z.string(),
+  location: z.enum(LOCATIONS, {
+    required_error: "Location is required",
+    invalid_type_error: "Invalid location",
+  }),
   bedrooms: z.number(),
   bathrooms: z.number(),
   area: z.number(),
-  image: z.string(),
+  image: z.array(z.string()),
   features: z.array(z.string().min(1).min(10).max(100)),
   price: priceZodSchema,
 });
