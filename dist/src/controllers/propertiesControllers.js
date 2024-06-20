@@ -16,8 +16,8 @@ function getAllProperties(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const queryLimit = req.query.limit && +req.query.limit;
-            const limit = queryLimit && (0, validateLimit_1.validateLimit)(queryLimit) ? queryLimit : 100;
-            const properties = yield propertyModel_1.PropertyModel.find().limit(limit);
+            const limit = queryLimit && (0, validateLimit_1.validateLimit)(queryLimit) ? queryLimit : null;
+            const properties = limit ? yield propertyModel_1.PropertyModel.find().limit(limit) : yield propertyModel_1.PropertyModel.find();
             res.send(properties);
         }
         catch (err) {
